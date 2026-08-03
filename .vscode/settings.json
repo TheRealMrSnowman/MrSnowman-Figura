@@ -1,3 +1,9 @@
 {
-    "figura.librariesFolderPath": "C:\\Users\\Snow\\AppData\\Roaming\\.minecraft\\figura\\avatars\\libraries\\"
+    "figura.librariesFolderPath": "C:\\Users\\Snow\\AppData\\Roaming\\.minecraft\\figura\\avatars\\libraries\\",
+    "Lua.diagnostics.globals": [
+        "nameplate",
+        "models",
+        "animations",
+        "player"
+    ]
 }
