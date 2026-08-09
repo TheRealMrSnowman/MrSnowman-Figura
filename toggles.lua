@@ -13,12 +13,6 @@ function pings.togglePuppyEyes(state)
         PlayerReset()
     end
 end
-function pings.toggleRealFace(state)
-    realFace:setVisible(state)
-    if not state then
-        PlayerReset()
-    end
-end
 function pings.toggleChestBone(state)
     boob:setVisible(state)
     if not state then

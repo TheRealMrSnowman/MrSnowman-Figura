@@ -1,3 +1,6 @@
+require("toggles")
+require("tools")
+
 vanilla_model.PLAYER:setVisible(false)
 vanilla_model.HELMET:setVisible(false)
 vanilla_model.CHESTPLATE:setVisible(false)
@@ -36,16 +39,17 @@ function rndName()
 end
 
 -- Defaults
-snowtoggle = true
+snowtoggle = false
 pys_stff_tggle = 0
 
 function PlayerReset()
     gw_eyes:setVisible(false)
     cute_eyes:setVisible(false)
-    realFace:setVisible(false)
     boob:setVisible(false)
+    animations.model.skull_anim:play()
 end
 PlayerReset()
+models.model.root.Skull:setLight(8)
 
 function events.tick()
     if snowtoggle then
@@ -63,9 +67,9 @@ function events.item_render(item)
     if item.id == "minecraft:netherite_sword" then
         local paticleChance = math.random(1,20)
         if paticleChance == 1 then
-            createParticleAt("flame", stickMallows.top.top, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0)
-            createParticleAt("flame", stickMallows.middle.middle, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0)
-            createParticleAt("flame", stickMallows.bottom.bottom, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0)
+            createParticleAt("flame", stickMallows.top.top, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
+            createParticleAt("flame", stickMallows.middle.middle, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
+            createParticleAt("flame", stickMallows.bottom.bottom, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
         end
         return models.mallow_stick.Item
     elseif item.id == "simulated:creative_physics_staff" then
@@ -96,7 +100,7 @@ function events.item_render(item)
 end
 nameplate.ALL:setText(rndName())
 
-local partyKey = keybinds:newKeybind("Party", "key.keyboard.n", false)
+local partyKey = keybinds:newKeybind("Party", "key.keyboard.delete", false)
 function pings.party()
     soundHandler("sounds.party", player:getPos(), 1, 1, false)
     local particleCount = 500
@@ -128,7 +132,6 @@ function newTrigger(wheelPage, triggerTitle, icon, pingName)
 end
 
 -- Init act whel
-require("toggles")
 function pings.cycleName()
     nameplate.ALL:setText(rndName())
 end
@@ -137,7 +140,6 @@ local mainPage = action_wheel:newPage()
 action_wheel:setPage(mainPage)
 newToggle(mainPage:newAction(), "Enable GWUHH Mode", "Disable GWUHH Mode", "ender_pearl", "ender_eye", pings.toggleGwuh)
 newToggle(mainPage:newAction(), "Enable Awww Mode", "Disable Awww Mode", "bone", "bone_meal", pings.togglePuppyEyes)
-newToggle(mainPage:newAction(), "Enable Real Face", "Disable Real Face", "sculk_catalyst", "sculk_shrieker", pings.toggleRealFace)
 newToggle(mainPage:newAction(), "Enable \"Chest Bone\"", "Disable \"Chest Bone\"", "chest", "ender_chest", pings.toggleChestBone)
 newToggle(mainPage:newAction(), "Enable Creeper", "Disable Creeper", "creeper_head", "barrier", pings.toggleCreeper)
 newToggle(mainPage:newAction(), "Enable Snowflake", "Disable Snowflake", "snowball", "powder_snow_bucket", pings.toggleSnowflakes)
