@@ -1,5 +1,5 @@
 function pings.toggleGwuh(state)
-    gw_eyes:setVisible(state)
+    Gwuh:setVisible(state)
     if state then
         animations.model.extend:play()
         animations.model.extend:restart()
@@ -8,13 +8,13 @@ function pings.toggleGwuh(state)
     PlayerReset()
 end
 function pings.togglePuppyEyes(state)
-    cute_eyes:setVisible(state)
+    AwwEyes:setVisible(state)
     if not state then
         PlayerReset()
     end
 end
 function pings.toggleChestBone(state)
-    boob:setVisible(state)
+    Boob:setVisible(state)
     if not state then
         PlayerReset()
     end
@@ -30,9 +30,9 @@ function pings.toggleCreeper(state)
 end
 function pings.toggleSnowflakes(state)
     if state then
-        snowtoggle = true
+        SnowState = true
     end
     if not state then
-        snowtoggle = false
+        SnowState = false
     end
 end

@@ -8,13 +8,12 @@ vanilla_model.LEGGINGS:setVisible(false)
 vanilla_model.BOOTS:setVisible(false)
 -- vanilla_model.ELYTRA:setVisible(false)
 -- Shrthnd
-gw_eyes = models.model.root.Head.custom_head.gwuh_eyes
-cute_eyes = models.model.root.Head.custom_head.cute_eyes
-realFace = models.model.root.Head.custom_head.real
-boob = models.model.root.Body.custom_body.chest.chest_bone
-stickMallows = models.mallow_stick.Item.mallows
+Gwuh = models.model.root.Head.custom_head.gwuh_eyes
+AwwEyes = models.model.root.Head.custom_head.cute_eyes
+Boob = models.model.root.Body.custom_body.chest.chest_bone
+StickMallows = models.items.mallow_stick.Item.mallows
 -- c_phys_staff = models.mod_integration.create_mod.physics_staff
-function rndName()
+function RndName()
     local potentialNames = {
         "TheRealMrSnowman",
         "TheNotFakeMrSnowman",
@@ -37,25 +36,25 @@ function rndName()
     local newName = potentialNames[pickName]
     return newName
 end
+nameplate.ALL:setText(RndName())
 
 -- Defaults
-snowtoggle = false
-pys_stff_tggle = 0
+SnowState = false
+AeroWandState = 0
 
 function PlayerReset()
-    gw_eyes:setVisible(false)
-    cute_eyes:setVisible(false)
-    boob:setVisible(false)
-    animations.model.skull_anim:play()
+    Gwuh:setVisible(false)
+    AwwEyes:setVisible(false)
+    Boob:setVisible(false)
+    animations.model.headAnim:play()
 end
 PlayerReset()
-models.model.root.Skull:setLight(8)
 
 function events.tick()
-    if snowtoggle then
+    if SnowState then
         local particleCount = 10
         for i = 1, particleCount, 1 do
-            createParticleAt("snowflake", models.model.root.Head, math.random(-1,0)+math.random(),0.7+math.random(),math.random(-1,0)+math.random(),0.25,0.15,false)
+            CreateParticleAt("snowflake", models.model.root.Head, math.random(-1,0)+math.random(),0.7+math.random(),math.random(-1,0)+math.random(),0.25,0.15,false)
         end
     end
     animations.model.healthBar:pause()
@@ -67,45 +66,42 @@ function events.item_render(item)
     if item.id == "minecraft:netherite_sword" then
         local paticleChance = math.random(1,20)
         if paticleChance == 1 then
-            createParticleAt("flame", stickMallows.top.top, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
-            createParticleAt("flame", stickMallows.middle.middle, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
-            createParticleAt("flame", stickMallows.bottom.bottom, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
+            CreateParticleAt("flame", StickMallows.top.top, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
+            CreateParticleAt("flame", StickMallows.middle.middle, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
+            CreateParticleAt("flame", StickMallows.bottom.bottom, math.random(-0.1,0.1), math.random(-0.1,0.1)+0.1 ,math.random(-0.1,0.1), 0.3, 0, false)
         end
         return models.mallow_stick.Item
     elseif item.id == "simulated:creative_physics_staff" then
         function pings.wand_toggle(mod)
             if mod == 1 then
-                    pys_stff_tggle = pys_stff_tggle+mod
-                elseif mod == 3 and not is_even(pys_stff_tggle) then
-                    pys_stff_tggle = pys_stff_tggle+mod
+                    AeroWandState = AeroWandState+mod
+                elseif mod == 3 and not IsEven(AeroWandState) then
+                    AeroWandState = AeroWandState+mod
                 else
             end
         end
-        if is_even(pys_stff_tggle) then
+        if IsEven(AeroWandState) then
             animations.physics_staff.active:stop()
             animations.physics_staff.Idle:play()
 
-        elseif not is_even(pys_stff_tggle) then
+        elseif not IsEven(AeroWandState) then
             animations.physics_staff.Idle:stop()
             animations.physics_staff.active:play()
         end
         local paticleChance = math.random(1,10)
         if paticleChance == 1 then
-            createParticleAt("snowflake", models.physics_staff.Item.orb.inner_cube, 0, 0 ,0, 0.1, 0)
+            CreateParticleAt("snowflake", models.items.physics_staff.Item.orb.inner_cube, 0, 0 ,0, 0.1, 0)
         end
-        return models.physics_staff.Item
-    elseif item.id == "minecraft:crossbow" then
-        return models.deagle.Item
+        return models.items.physics_staff.Item
     end
 end
-nameplate.ALL:setText(rndName())
 
 local partyKey = keybinds:newKeybind("Party", "key.keyboard.delete", false)
 function pings.party()
-    soundHandler("sounds.party", player:getPos(), 1, 1, false)
+    SoundHandler("sounds.party", player:getPos(), 1, 1, false)
     local particleCount = 500
     for i = 1, particleCount, 1 do
-        createParticleAt("cloud", models.model.root.Head, math.random(-1,0)+math.random(),math.random()+1,math.random(-1,0)+math.random(),0.25,0.25,true)
+        CreateParticleAt("cloud", models.model.root.Head, math.random(-1,0)+math.random(),math.random()+1,math.random(-1,0)+math.random(),0.25,0.25,true)
     end
 end
 partyKey:setOnPress(function()
@@ -116,7 +112,7 @@ function NameSwap(newName)
     nameplate.ALL:setText(newName)
 end
 
-function newToggle(wheelPage, offTitle, onTitle, offItem, onItem, pingName)
+function NewToggle(wheelPage, offTitle, onTitle, offItem, onItem, pingName)
     local toggleaction = wheelPage
         :title(offTitle)
         :toggleTitle(onTitle)
@@ -124,7 +120,7 @@ function newToggle(wheelPage, offTitle, onTitle, offItem, onItem, pingName)
         :toggleItem(onItem)
         :setOnToggle(pingName)
 end
-function newTrigger(wheelPage, triggerTitle, icon, pingName)
+function NewTrigger(wheelPage, triggerTitle, icon, pingName)
     local toggleaction = wheelPage
         :title(triggerTitle)
         :item(icon)
@@ -133,14 +129,14 @@ end
 
 -- Init act whel
 function pings.cycleName()
-    nameplate.ALL:setText(rndName())
+    nameplate.ALL:setText(RndName())
 end
 -- Toggles
 local mainPage = action_wheel:newPage()
 action_wheel:setPage(mainPage)
-newToggle(mainPage:newAction(), "Enable GWUHH Mode", "Disable GWUHH Mode", "ender_pearl", "ender_eye", pings.toggleGwuh)
-newToggle(mainPage:newAction(), "Enable Awww Mode", "Disable Awww Mode", "bone", "bone_meal", pings.togglePuppyEyes)
-newToggle(mainPage:newAction(), "Enable \"Chest Bone\"", "Disable \"Chest Bone\"", "chest", "ender_chest", pings.toggleChestBone)
-newToggle(mainPage:newAction(), "Enable Creeper", "Disable Creeper", "creeper_head", "barrier", pings.toggleCreeper)
-newToggle(mainPage:newAction(), "Enable Snowflake", "Disable Snowflake", "snowball", "powder_snow_bucket", pings.toggleSnowflakes)
-newTrigger(mainPage:newAction(), "Cycle Name", "name_tag", pings.cycleName)
+NewToggle(mainPage:newAction(), "Enable GWUHH Mode", "Disable GWUHH Mode", "ender_pearl", "ender_eye", pings.toggleGwuh)
+NewToggle(mainPage:newAction(), "Enable Awww Mode", "Disable Awww Mode", "bone", "bone_meal", pings.togglePuppyEyes)
+NewToggle(mainPage:newAction(), "Enable \"Chest Bone\"", "Disable \"Chest Bone\"", "chest", "ender_chest", pings.toggleChestBone)
+NewToggle(mainPage:newAction(), "Enable Creeper", "Disable Creeper", "creeper_head", "barrier", pings.toggleCreeper)
+NewToggle(mainPage:newAction(), "Enable Snowflake", "Disable Snowflake", "snowball", "powder_snow_bucket", pings.toggleSnowflakes)
+NewTrigger(mainPage:newAction(), "Cycle Name", "name_tag", pings.cycleName)

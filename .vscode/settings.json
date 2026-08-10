@@ -4,6 +4,14 @@
         "nameplate",
         "models",
         "animations",
-        "player"
+        "player",
+        "pings",
+        "keybinds",
+        "action_wheel",
+        "sounds",
+        "vec",
+        "particles",
+        "vanilla_model",
+        "events"
     ]
 }
