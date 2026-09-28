@@ -1,12 +1,13 @@
 require("toggles")
 require("tools")
 
+models.model.root:setPrimaryTexture("SKIN")
 vanilla_model.PLAYER:setVisible(false)
 vanilla_model.HELMET:setVisible(false)
 vanilla_model.CHESTPLATE:setVisible(false)
+vanilla_model.ELYTRA:setVisible(false)
 vanilla_model.LEGGINGS:setVisible(false)
 vanilla_model.BOOTS:setVisible(false)
--- vanilla_model.ELYTRA:setVisible(false)
 -- Shrthnd
 Gwuh = models.model.root.Head.custom_head.gwuh_eyes
 AwwEyes = models.model.root.Head.custom_head.cute_eyes
@@ -41,6 +42,8 @@ nameplate.ALL:setText(RndName())
 -- Defaults
 SnowState = false
 AeroWandState = 0
+HealthHeight = false
+HungerWidth = false
 
 function PlayerReset()
     Gwuh:setVisible(false)
@@ -52,14 +55,24 @@ PlayerReset()
 
 function events.tick()
     if SnowState then
-        local particleCount = 10
+        local particleCount = 50
         for i = 1, particleCount, 1 do
-            CreateParticleAt("snowflake", models.model.root.Head, math.random(-1,0)+math.random(),0.7+math.random(),math.random(-1,0)+math.random(),0.25,0.15,false)
+            local a = math.random()*2*math.pi
+            local r = math.random()*2
+            local x = math.sin(a)*r
+            local z = math.cos(a)*r
+            CreateParticleAt("snowflake", models.model.root.Head, x,1.5+math.random(),z,0.25,0.15,false)
         end
     end
-    animations.model.healthBar:pause()
-    animations.model.healthBar:setTime(player:getHealth()/player:getMaxHealth())
-    nameplate.ENTITY:setPos(0,(player:getHealth()/player:getMaxHealth()*2-2),0)
+    if HealthHeight then
+        animations.model.healthBar:pause()
+        animations.model.healthBar:setTime(player:getHealth()/player:getMaxHealth())
+        nameplate.ENTITY:setPos(0,(player:getHealth()/player:getMaxHealth()*2-2),0)
+    end
+    if HungerWidth then
+        animations.model.hungerBar:pause()
+        animations.model.hungerBar:setTime(player:getFood()/20)
+    end
 end
 
 function events.item_render(item)
@@ -99,9 +112,21 @@ end
 local partyKey = keybinds:newKeybind("Party", "key.keyboard.delete", false)
 function pings.party()
     SoundHandler("sounds.party", player:getPos(), 1, 1, false)
-    local particleCount = 500
+    local particleCount = 1500
     for i = 1, particleCount, 1 do
-        CreateParticleAt("cloud", models.model.root.Head, math.random(-1,0)+math.random(),math.random()+1,math.random(-1,0)+math.random(),0.25,0.25,true)
+        -- local a = math.random()*2*math.pi
+        local u1 = math.random()
+        local u2 = math.random()
+        local r = 2
+        local r2 = r*math.sqrt(u1)
+        local t = u2*2*math.pi
+        local x = r2*math.cos(t)
+        local z = r2*math.sin(t)
+        -- local d = math.random()*r
+        -- local x = math.sin(a)*d
+        local y = 2+math.random()
+        -- local z = math.cos(a)*d
+        CreateParticleAt("cloud", models.model.root.Head,x,y,z,0.25,0.25,true)
     end
 end
 partyKey:setOnPress(function()
@@ -110,21 +135,6 @@ end)
 
 function NameSwap(newName)
     nameplate.ALL:setText(newName)
-end
-
-function NewToggle(wheelPage, offTitle, onTitle, offItem, onItem, pingName)
-    local toggleaction = wheelPage
-        :title(offTitle)
-        :toggleTitle(onTitle)
-        :item(offItem)
-        :toggleItem(onItem)
-        :setOnToggle(pingName)
-end
-function NewTrigger(wheelPage, triggerTitle, icon, pingName)
-    local toggleaction = wheelPage
-        :title(triggerTitle)
-        :item(icon)
-        :onLeftClick(pingName)
 end
 
 -- Init act whel
@@ -139,4 +149,7 @@ NewToggle(mainPage:newAction(), "Enable Awww Mode", "Disable Awww Mode", "bone",
 NewToggle(mainPage:newAction(), "Enable \"Chest Bone\"", "Disable \"Chest Bone\"", "chest", "ender_chest", pings.toggleChestBone)
 NewToggle(mainPage:newAction(), "Enable Creeper", "Disable Creeper", "creeper_head", "barrier", pings.toggleCreeper)
 NewToggle(mainPage:newAction(), "Enable Snowflake", "Disable Snowflake", "snowball", "powder_snow_bucket", pings.toggleSnowflakes)
+NewToggle(mainPage:newAction(), "Enable HealthHeight", "Disable HealthHeight", "nether_star", "heart_of_the_sea", pings.toggleHealthHeight)
+NewToggle(mainPage:newAction(), "Enable HungerWidth", "Disable HungerWidth", "nether_star", "heart_of_the_sea", pings.toggleHungerWidth)
+NewToggle(mainPage:newAction(), "Enable Invis", "Disable Invis", "nether_star", "heart_of_the_sea", pings.toggleInvis)
 NewTrigger(mainPage:newAction(), "Cycle Name", "name_tag", pings.cycleName)

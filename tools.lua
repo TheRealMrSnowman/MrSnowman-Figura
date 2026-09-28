@@ -15,3 +15,17 @@ end
 function IsEven(n)
     return n % 2 == 0
 end
+function NewToggle(wheelPage, offTitle, onTitle, offItem, onItem, pingName)
+    local toggleaction = wheelPage
+        :title(offTitle)
+        :toggleTitle(onTitle)
+        :item(offItem)
+        :toggleItem(onItem)
+        :setOnToggle(pingName)
+end
+function NewTrigger(wheelPage, triggerTitle, icon, pingName)
+    local toggleaction = wheelPage
+        :title(triggerTitle)
+        :item(icon)
+        :onLeftClick(pingName)
+end

@@ -4,5 +4,6 @@
   "authors": [
     "TRMS"
   ],
-  "color": "#a672ef"
+  "color": "white",
+  "ignoredTextures": ["suit"]
 }

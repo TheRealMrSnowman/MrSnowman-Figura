@@ -36,3 +36,29 @@ function pings.toggleSnowflakes(state)
         SnowState = false
     end
 end
+function pings.toggleHealthHeight(state)
+    if state then
+        HealthHeight = true
+    end
+    if not state then
+        HealthHeight = false
+    end
+end
+function pings.toggleHungerWidth(state)
+    if state then
+        HungerWidth = true
+    end
+    if not state then
+        HungerWidth = false
+    end
+end
+function pings.toggleInvis(state)
+    if state then
+        models.model:setPrimaryRenderType("NONE")
+        nameplate.Entity:setVisible(false)
+    end
+    if not state then
+        models.model:setPrimaryRenderType("CUTOUT")
+        nameplate.Entity:setVisible(true)
+    end
+end
