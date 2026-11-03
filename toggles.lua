@@ -52,13 +52,3 @@ function pings.toggleHungerWidth(state)
         HungerWidth = false
     end
 end
-function pings.toggleInvis(state)
-    if state then
-        models.model:setPrimaryRenderType("NONE")
-        nameplate.Entity:setVisible(false)
-    end
-    if not state then
-        models.model:setPrimaryRenderType("CUTOUT")
-        nameplate.Entity:setVisible(true)
-    end
-end

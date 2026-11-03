@@ -151,5 +151,4 @@ NewToggle(mainPage:newAction(), "Enable Creeper", "Disable Creeper", "creeper_he
 NewToggle(mainPage:newAction(), "Enable Snowflake", "Disable Snowflake", "snowball", "powder_snow_bucket", pings.toggleSnowflakes)
 NewToggle(mainPage:newAction(), "Enable HealthHeight", "Disable HealthHeight", "nether_star", "heart_of_the_sea", pings.toggleHealthHeight)
 NewToggle(mainPage:newAction(), "Enable HungerWidth", "Disable HungerWidth", "nether_star", "heart_of_the_sea", pings.toggleHungerWidth)
-NewToggle(mainPage:newAction(), "Enable Invis", "Disable Invis", "nether_star", "heart_of_the_sea", pings.toggleInvis)
 NewTrigger(mainPage:newAction(), "Cycle Name", "name_tag", pings.cycleName)
